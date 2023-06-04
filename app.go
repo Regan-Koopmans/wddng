@@ -15,6 +15,16 @@ import (
 var resources embed.FS
 var t = template.Must(template.ParseFS(resources, "templates/*"))
 
+func run_sql(statement string, w http.ResponseWriter) {
+	db, _ := sql.Open("sqlite3", os.Getenv("DATABASE_URL"))
+	defer db.Close()
+	_, err := db.Exec(statement)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Fprintf(w, "ACK")
+}
+
 func main() {
 	port := os.Getenv("PORT")
 	if port == "" {
@@ -31,33 +41,16 @@ func main() {
 		t.ExecuteTemplate(w, "craig.html.tmpl", data)
 	})
 	http.HandleFunc("/bmljawo=accept", func(w http.ResponseWriter, r *http.Request) {
-		db, _ := sql.Open("sqlite3", os.Getenv("DATABASE_URL"))
-		defer db.Close()
-		sts := "UPDATE rsvp SET response = 'ACCEPT' WHERE name='nick'"
-		_, _ = db.Exec(sts)
-		fmt.Fprintf(w, "ACK")
+		run_sql("UPDATE rsvp SET response = 'ACCEPT' WHERE name='nick'", w)
 	})
 	http.HandleFunc("/bmljawo=reject", func(w http.ResponseWriter, r *http.Request) {
-		db, _ := sql.Open("sqlite3", os.Getenv("DATABASE_URL"))
-		defer db.Close()
-		sts := "UPDATE rsvp SET response = 'REJECT' WHERE name='nick'"
-		_, _ = db.Exec(sts)
-		fmt.Fprintf(w, "ACK")
+		run_sql("UPDATE rsvp SET response = 'REJECT' WHERE name='nick'", w)
 	})
-
 	http.HandleFunc("/Y3JhaWcKaccept", func(w http.ResponseWriter, r *http.Request) {
-		db, _ := sql.Open("sqlite3", os.Getenv("DATABASE_URL"))
-		defer db.Close()
-		sts := "UPDATE rsvp SET response = 'ACCEPT' WHERE name='craig'"
-		_, _ = db.Exec(sts)
-		fmt.Fprintf(w, "ACK")
+		run_sql("UPDATE rsvp SET response = 'ACCEPT' WHERE name='craig'", w)
 	})
 	http.HandleFunc("/Y3JhaWcKreject", func(w http.ResponseWriter, r *http.Request) {
-		db, _ := sql.Open("sqlite3", os.Getenv("DATABASE_URL"))
-		defer db.Close()
-		sts := "UPDATE rsvp SET response = 'REJECT' WHERE name='craig'"
-		_, _ = db.Exec(sts)
-		fmt.Fprintf(w, "ACK")
+		run_sql("UPDATE rsvp SET response = 'REJECT' WHERE name='craig'", w)
 	})
 
 	http.HandleFunc("/responses-overview", func(w http.ResponseWriter, r *http.Request) {
@@ -85,7 +78,6 @@ func main() {
 		defer db.Close()
 		fmt.Fprintf(w, "DB INIT")
 	})
-
 	log.Println("listening on", port)
 	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
