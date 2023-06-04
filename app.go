@@ -17,7 +17,9 @@ var t = template.Must(template.ParseFS(resources, "templates/*"))
 
 func main() {
 	port := os.Getenv("PORT")
-	if port == "" { port = "8080" }
+	if port == "" {
+		port = "8080"
+	}
 	fs := http.FileServer(http.Dir("./static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	http.HandleFunc("/bmljawo=", func(w http.ResponseWriter, r *http.Request) {
