@@ -1,11 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
 <body>
-
   <h1>Hey Nick</h1>
   <p>
     あなたは長年の友人である。私の結婚式の "ベストマン "をお願いしたい。
@@ -13,27 +9,33 @@
     これでは、まさに「キャシュマネー」ですね。これはまさに "ベンガ "でしょう。
     私たちと一緒にこの旅に出ませんか？
   </p>
-
-  <button onclick="notify()">はい</button>
-  <button>ノー</button>
+  <button onclick="notify_accept()">はい</button>
+  <button onclick="notify_reject()">ノー</button>
   <br/>
-
   <div id="pika" style="display: none" >
-  <img src="pika.gif" />
-  <p>素晴らしい！</p>
+    <img src="static/pika.gif" />
+    <p>素晴らしい！</p>
+  </div>
+  <div id="pika_sad" style="display: none" >
+    <img src="static/pika_sad.gif" />
+    <p>(｡•́︿•̀｡)</p>
   </div>
 <style>
-  h1 {
-      font-family: sans-serif;
-  }
-
-  #pika {
-      margin-top: 10px;
-  }
+  h1 { font-family: sans-serif; }
+  #pika { margin-top: 10px; }
+  img { max-width: 100%; }
 </style>
 <script>
-  function notify() {
+  function notify_accept() {
       document.getElementById("pika").style.display = 'block'
+      document.getElementById("pika_sad").style.display = 'none'
+      fetch("/bmljawo=accept")
+  }
+
+  function notify_reject() {
+      document.getElementById("pika").style.display = 'none'
+      document.getElementById("pika_sad").style.display = 'block'
+      fetch("/bmljawo=reject")
   }
 </script>
 </html>
