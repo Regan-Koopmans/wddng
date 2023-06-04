@@ -1,4 +1,4 @@
-module github.com/fly-apps/go-example
+module github.com/Regan-Koopmans/wddng
 
 go 1.16
 
