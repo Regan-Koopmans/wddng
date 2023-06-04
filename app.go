@@ -17,15 +17,14 @@ func main() {
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
-
 	}
 
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	http.Handle("/", http.FileServer(http.Dir("./static")))
+	// Nick
+	http.HandleFunc("/bmljawo=", func(w http.ResponseWriter, r *http.Request) {
 		data := map[string]string{
-			"Region": os.Getenv("FLY_REGION"),
 		}
-
-		t.ExecuteTemplate(w, "index.html.tmpl", data)
+		t.ExecuteTemplate(w, "nick.html.tmpl", data)
 	})
 
 	log.Println("listening on", port)

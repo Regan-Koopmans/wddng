@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+  <h1>Hey Nick</h1>
+  <p>
+    あなたは長年の友人である。私の結婚式の "ベストマン "をお願いしたい。
+    これは Kelly ーにとっても私にとっても大変な名誉なことです。
+    これでは、まさに「キャシュマネー」ですね。これはまさに "ベンガ "でしょう。
+    私たちと一緒にこの旅に出ませんか？
+  </p>
+
+  <button onclick="notify()">はい</button>
+  <button>ノー</button>
+  <br/>
+
+  <div id="pika" style="display: none" >
+  <img src="pika.gif" />
+  <p>素晴らしい！</p>
+  </div>
+<style>
+  h1 {
+      font-family: sans-serif;
+  }
+
+  #pika {
+      margin-top: 10px;
+  }
+</style>
+<script>
+  function notify() {
+      document.getElementById("pika").style.display = 'block'
+  }
+</script>
+</html>
